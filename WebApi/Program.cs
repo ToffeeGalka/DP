@@ -1,5 +1,6 @@
 
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
 using WebApi.Services;
 using WebData;
 
@@ -16,7 +17,13 @@ namespace WebApi
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
+            builder.Services.AddSwaggerGen(options => {
+                options.MapType<DateOnly>(() => new OpenApiSchema
+                {
+                    Type = "string",
+                    Format = "date"
+                });
+            });
             builder.Services.AddDbContext<AppDbContext>(x =>
             {
                 x.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));

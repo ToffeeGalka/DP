@@ -5,6 +5,8 @@ namespace WebApi.Services
 {
     public interface IPatientService
     {
-        public Task AddPatient(string surName, string name, string secName, DateOnly dateOfBirth, string sex, string address, string phone);
+        public Task AddPatient(PatientEntity patientEntity);
+        public Task EditPatient(PatientEntity patientEntity);
+        public Task DeletePatient(int idPatient);
     }
 }
