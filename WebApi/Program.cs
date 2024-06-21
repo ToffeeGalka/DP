@@ -1,10 +1,11 @@
 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
-using WebApi.Services;
+using Business.Services;
 using WebData;
+using Business.Mappers;
 
-namespace WebApi
+namespace Business
 {
     public class Program
     {
@@ -29,9 +30,10 @@ namespace WebApi
                 x.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
             });
             builder.Services.AddTransient<IPatientService, PatientService>();
+            builder.Services.AddScoped<IPatientMapper, PatientMapper>();
 
             var app = builder.Build();
-
+            
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {

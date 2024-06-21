@@ -9,13 +9,13 @@ namespace WebData
         public DbSet<PostEntity> Posts { get; set; }
         public DbSet<ReasonEntity> Reasons { get; set; }
         public DbSet<ICDEntity> ICD10 { get; set; }
-        public DbSet<DoctorEntity> Doctors { get; set; }    
+        public DbSet<DoctorEntity> Doctors { get; set; }
         public DbSet<DispRegEntity> DispRegs { get; set; }
         public AppDbContext()
         {
         }
-        public AppDbContext(DbContextOptions options) : base(options) 
-        { 
+        public AppDbContext(DbContextOptions options) : base(options)
+        {
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

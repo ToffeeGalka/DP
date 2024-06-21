@@ -1,6 +1,6 @@
 ﻿using WebData.Entities;
 
-namespace WebApi.Models
+namespace Business.Models
 {
     public class Doctor
     {

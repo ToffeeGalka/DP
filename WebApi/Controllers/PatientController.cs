@@ -2,12 +2,12 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Runtime.CompilerServices;
-using WebApi.Models;
-using WebApi.Services;
-using WebData;
+using Business.Models;
+using Business.Services;
 using WebData.Entities;
+using WebData;
 
-namespace WebApi.Controllers
+namespace Business.Controllers
 {
     [Route("[controller]")]
     [ApiController]
@@ -29,21 +29,10 @@ namespace WebApi.Controllers
         }
 
         [HttpPost("AddPatient")]
-        public async Task<ActionResult<PatientEntity>> AddPatient(PatientEntity patientEntity) 
-        {
-            if ((patientEntity.Sex != "м") & (patientEntity.Sex != "ж"))
-            {
-                ModelState.AddModelError("Sex", "Ввдеите 'м' или 'ж'");
-            }
-            if (!ModelState.IsValid) 
-                return BadRequest(ModelState);
-            await patientService.AddPatient(patientEntity);
-            return Ok(patientEntity);
-
-        }
+        public async Task AddPatient(PatientEntity patientEntity) => await patientService.AddPatient(patientEntity);
             
         [HttpPut("EditPatient")]
-        public async Task EditPatient(PatientEntity patient) => await patientService.EditPatient(patient);
+        public async Task EditPatient(Patient patient) => await patientService.EditPatient(patient);
 
         [HttpDelete("DeletePatient")]
         public async Task DeletePatient(int idPatient) => await patientService.DeletePatient(idPatient);   
