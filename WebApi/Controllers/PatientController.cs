@@ -20,13 +20,7 @@ namespace Business.Controllers
             return patients;
         }
         [HttpGet ("{id}")]
-        public async Task<ActionResult<PatientEntity>> Get(int id) 
-        {
-            var patients = await dbContext.Patients.FirstOrDefaultAsync(x => x.Id == id);
-            if (patients == null)
-            return NotFound();
-            return new ObjectResult(patients);
-        }
+        public async Task<PatientEntity> Get(int id) => await patientService.Get(id);
 
         [HttpPost("AddPatient")]
         public async Task AddPatient(PatientEntity patientEntity) => await patientService.AddPatient(patientEntity);

@@ -10,10 +10,17 @@ namespace Business.Services
 {
     public class PatientService(AppDbContext context, IPatientMapper mapper) : IPatientService
     {
-        private IPatientMapper _mapper;
-         public async Task<int> AddPatient(PatientEntity patientEntity)
+        public async Task<PatientEntity> Get(int id)
+        {
+            var patients = await context.Patients.FirstOrDefaultAsync(x => x.Id == id);
+            if (patients == null)
             {
-
+                throw new Exception("Пациент не найден!");
+            }
+            return patients;
+        }
+        public async Task<int> AddPatient(PatientEntity patientEntity)
+            {
             if ((patientEntity.Sex != "м") & (patientEntity.Sex != "ж"))
             {
              throw new Exception("Пол не корректный!!! Ввдеите 'м' или 'ж'");
@@ -27,15 +34,6 @@ namespace Business.Services
             var oldEditPatient = await context.Patients.FirstOrDefaultAsync(p => p.Id == patient.Id);
             var newValues = mapper.MapFromModel(patient);
             context.Entry(oldEditPatient).CurrentValues.SetValues(newValues);
-            //if (oldEditPatient == null)
-            //    return;
-            //oldEditPatient.SurName = patient.SurName;
-            //oldEditPatient.Name = patient.Name;
-            //oldEditPatient.SecName = patient.SecName;
-            //oldEditPatient.DateOfBirth = patient.DateOfBirth;
-            //oldEditPatient.Sex = patient.Sex;
-            //oldEditPatient.Address = patient.Address;
-            //oldEditPatient.Phone = patient.Phone;
             await context.SaveChangesAsync();
         }
         public async Task DeletePatient(int idPatient)
