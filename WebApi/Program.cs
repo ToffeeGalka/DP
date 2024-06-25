@@ -1,9 +1,11 @@
 
 using Microsoft.EntityFrameworkCore;
-using WebApi.Services;
+using Microsoft.OpenApi.Models;
+using Business.Services;
 using WebData;
+using Business.Mappers;
 
-namespace WebApi
+namespace Business
 {
     public class Program
     {
@@ -16,15 +18,22 @@ namespace WebApi
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
+            builder.Services.AddSwaggerGen(options => {
+                options.MapType<DateOnly>(() => new OpenApiSchema
+                {
+                    Type = "string",
+                    Format = "date"
+                });
+            });
             builder.Services.AddDbContext<AppDbContext>(x =>
             {
                 x.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
             });
             builder.Services.AddTransient<IPatientService, PatientService>();
+            builder.Services.AddScoped<IPatientMapper, PatientMapper>();
 
             var app = builder.Build();
-
+            
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {

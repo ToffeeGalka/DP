@@ -1,4 +1,4 @@
-﻿namespace WebApi.Models
+﻿namespace Business.Models
 {
     public class ICD10
     {
