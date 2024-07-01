@@ -1,4 +1,6 @@
-﻿namespace WebData.Entities
+﻿using WebData.Enums;
+
+namespace WebData.Entities
 {
     public class PatientEntity
     {
@@ -7,7 +9,7 @@
         public string Name { get; set; }
         public string? SecName { get; set; }
         public DateOnly DateOfBirth { get; set; }
-        public string Sex { get; set; }
+        public Sex Sex { get; set; }
         public string Address { get; set; }
         public string? Phone { get; set; }
     }

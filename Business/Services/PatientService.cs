@@ -1,15 +1,21 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Business.Models;
-using Microsoft.EntityFrameworkCore;
 using WebData.Entities;
 using WebData;
 using Business.Mappers;
 using System.Data;
+using WebData.Enums;
 
 namespace Business.Services
 {
     public class PatientService(AppDbContext context, IPatientMapper mapper) : IPatientService
     {
+
+        public PatientEntity[] GetAll()
+        {
+            var patients = context.Patients.ToArray();
+            return patients;
+        }
         public async Task<PatientEntity> Get(int id)
         {
             var patients = await context.Patients.FirstOrDefaultAsync(x => x.Id == id);
@@ -19,15 +25,12 @@ namespace Business.Services
             }
             return patients;
         }
-        public async Task<int> AddPatient(PatientEntity patientEntity)
+        public async Task<int> AddPatient(Patient patient)
             {
-            if ((patientEntity.Sex != "м") & (patientEntity.Sex != "ж"))
-            {
-             throw new Exception("Пол не корректный!!! Ввдеите 'м' или 'ж'");
-            }
-            context.Patients.Add(patientEntity);
+            var entity = mapper.MapFromModel(patient);
+            context.Patients.Add(entity);
             await context.SaveChangesAsync();
-            return patientEntity.Id;
+            return entity.Id;
             }
         public async Task EditPatient(Patient patient)
         {

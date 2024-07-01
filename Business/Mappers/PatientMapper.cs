@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WebData.Entities;
+using WebData.Enums;
 
 namespace Business.Mappers
 {
@@ -19,14 +20,15 @@ namespace Business.Mappers
                 Name = entity.Name,
                 SecName = entity.SecName,
                 DateOfBirth = entity.DateOfBirth,
-                Sex = entity.Sex,
+                Sex = entity.Sex.GetSexName(),
                 Address = entity.Address,
-                Phone = entity.Phone
-                
+                Phone = entity.Phone              
             };
         }
         public PatientEntity MapFromModel(Patient patient)
         {
+            if (patient.Sex != "ж" && patient.Sex != "м")
+                throw new Exception("Sex is not defined correctly");
             return new PatientEntity
             {
                 Id = patient.Id,
@@ -34,7 +36,7 @@ namespace Business.Mappers
                 Name = patient.Name,
                 SecName = patient.SecName,
                 DateOfBirth = patient.DateOfBirth,
-                Sex = patient.Sex,
+                Sex = patient.Sex == "м" ? Sex.Male : Sex.Female,
                 Address = patient.Address,
                 Phone = patient.Phone
             };

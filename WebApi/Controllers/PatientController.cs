@@ -11,19 +11,16 @@ namespace Business.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    public class PatientController(AppDbContext dbContext, IPatientService patientService) : ControllerBase
+    public class PatientController(IPatientService patientService) : ControllerBase
     {
-        [HttpGet("GetPatient")]
-        public PatientEntity[] Get() 
-        {
-            var patients = dbContext.Patients.ToArray();
-            return patients;
-        }
-        [HttpGet ("{id}")]
+        [HttpGet("GetPatientAll")]
+        public PatientEntity[] GetAll() => patientService.GetAll();
+
+        [HttpGet ("GetPatient {id}")]
         public async Task<PatientEntity> Get(int id) => await patientService.Get(id);
 
         [HttpPost("AddPatient")]
-        public async Task AddPatient(PatientEntity patientEntity) => await patientService.AddPatient(patientEntity);
+        public async Task AddPatient(Patient patientEntity) => await patientService.AddPatient(patientEntity);
             
         [HttpPut("EditPatient")]
         public async Task EditPatient(Patient patient) => await patientService.EditPatient(patient);

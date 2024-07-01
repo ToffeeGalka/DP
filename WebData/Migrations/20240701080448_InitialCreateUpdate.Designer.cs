@@ -5,13 +5,14 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using WebData;
 
 #nullable disable
 
 namespace WebData.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240613113139_InitialCreateUpdate")]
+    [Migration("20240701080448_InitialCreateUpdate")]
     partial class InitialCreateUpdate
     {
         /// <inheritdoc />
@@ -151,10 +152,8 @@ namespace WebData.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
-                    b.Property<string>("Sex")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
+                    b.Property<int>("Sex")
+                        .HasColumnType("int");
 
                     b.Property<string>("SurName")
                         .IsRequired()
