@@ -5,6 +5,7 @@ using WebData;
 using Business.Mappers;
 using System.Data;
 using WebData.Enums;
+using Business.Validators;
 
 namespace Business.Services
 {
@@ -27,6 +28,7 @@ namespace Business.Services
         }
         public async Task<int> AddPatient(Patient patient)
             {
+            PatientValidator.Validate(patient);
             var entity = mapper.MapFromModel(patient);
             context.Patients.Add(entity);
             await context.SaveChangesAsync();
@@ -35,6 +37,7 @@ namespace Business.Services
         public async Task EditPatient(Patient patient)
         {
             var oldEditPatient = await context.Patients.FirstOrDefaultAsync(p => p.Id == patient.Id);
+            PatientValidator.Validate(patient);
             var newValues = mapper.MapFromModel(patient);
             context.Entry(oldEditPatient).CurrentValues.SetValues(newValues);
             await context.SaveChangesAsync();

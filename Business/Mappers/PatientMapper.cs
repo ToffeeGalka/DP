@@ -1,4 +1,5 @@
 ﻿using Business.Models;
+using Business.Validators;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,8 +28,6 @@ namespace Business.Mappers
         }
         public PatientEntity MapFromModel(Patient patient)
         {
-            if (patient.Sex != "ж" && patient.Sex != "м")
-                throw new Exception("Sex is not defined correctly");
             return new PatientEntity
             {
                 Id = patient.Id,
