@@ -1,12 +1,4 @@
 ﻿using Business.Models;
-using Microsoft.IdentityModel.Tokens;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.NetworkInformation;
-using System.Text;
-using System.Threading.Tasks;
-using WebData.Entities;
 
 namespace Business.Validators;
 
@@ -15,15 +7,15 @@ public static class PatientValidator
     public static void Validate(Patient patient)
     {
         if (string.IsNullOrEmpty(patient.SurName))
-            throw new Exception("Фамилия не должна быть пустой");
+            throw new Exception("SURNAME PATIENT IS NOT BE NULL OR EMPTY");
         if (string.IsNullOrEmpty(patient.Name))
-            throw new Exception("Имя не должно быть пустым");
+            throw new Exception("NAME PATIENT IS NOT BE NULL OR EMPTY");
         if (patient.DateOfBirth > DateOnly.FromDateTime(DateTime.Today))
-            throw new Exception("Дата рождения не может быть больше текущей");
+            throw new Exception("DATE OF BIRTH CANNOT BE LONGER THAN CURRENT DATE");
         if (patient.Sex != "ж" && patient.Sex != "м")
-            throw new Exception("Не верно введен пол пациента! Введите 'м' или 'ж'!");
+            throw new Exception("GENDER PATIENT IS NOT CORRECT! INPUT 'м' OR 'ж'!");
         if (string.IsNullOrEmpty(patient.Address))
-            throw new Exception("Адрес не должен быть пустым");
+            throw new Exception("ADDRESS PATIENT IS NOT BE NULL OR EMPTY");
     }
 
 }

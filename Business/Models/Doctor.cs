@@ -1,6 +1,4 @@
-﻿using WebData.Entities;
-
-namespace Business.Models
+﻿namespace Business.Models
 {
     public class Doctor
     {
@@ -9,5 +7,6 @@ namespace Business.Models
         public string Name { get; set; }
         public string? SecName { get; set; }
         public int IdPost { get; set; }
+        public string PostName { get; set;}
     }
 }

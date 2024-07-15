@@ -32,6 +32,21 @@ namespace Business
             builder.Services.AddTransient<IPatientService, PatientService>();
             builder.Services.AddScoped<IPatientMapper, PatientMapper>();
 
+            builder.Services.AddTransient<IPostService, PostService>();
+            builder.Services.AddScoped<IPostMapper, PostMapper>();
+
+            builder.Services.AddTransient<IICDService, ICDService>();
+            builder.Services.AddScoped<IICDMapper, ICDMapper>();
+
+            builder.Services.AddTransient<IDoctorService, DoctorService>();
+            builder.Services.AddScoped<IDoctorMapper, DoctorMapper>();
+
+            builder.Services.AddTransient<IReasonService, ReasonService>();
+            builder.Services.AddScoped<IReasonMapper, ReasonMapper>();
+
+            builder.Services.AddTransient<IDispRegService, DispRegService>();
+            builder.Services.AddScoped<IDispRegMapper, DispRegMapper>();
+
             var app = builder.Build();
             
             // Configure the HTTP request pipeline.
