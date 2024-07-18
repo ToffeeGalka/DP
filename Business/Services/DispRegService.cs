@@ -6,7 +6,7 @@ using Business.Validators;
 
 namespace Business.Services
 {
-    public class DispRegService(AppDbContext dbContext, IDispRegMapper dispRegMapper) : IDispRegService
+    public class DispRegService(AppDbContext dbContext, IDispRegMapper dispRegMapper, IDispRegValidator dispRegValidator) : IDispRegService
     {
         public DispReg[] GetAll()
         {
@@ -20,7 +20,7 @@ namespace Business.Services
         }
         public async Task<int> AddDispReg(DispReg dispReg)
         {
-            DispRegValidator.Validate(dispReg);
+            await dispRegValidator.Validate(dispReg, dbContext);
             var entity = dispRegMapper.MapFromModel(dispReg);
             dbContext.DispRegs.Add(entity);
             await dbContext.SaveChangesAsync();
@@ -29,7 +29,11 @@ namespace Business.Services
         public async Task EditDispReg(DispReg dispReg)
         {
             var oldEditDispReg = await dbContext.DispRegs.FirstOrDefaultAsync(p => p.Id == dispReg.Id);
-            DispRegValidator.Validate(dispReg);
+            if (oldEditDispReg == null)
+            {
+                throw new Exception("ID DISPREG NOT FOUND");
+            }
+            await dispRegValidator.Validate(dispReg, dbContext);
             var newValues = dispRegMapper.MapFromModel(dispReg);
             dbContext.Entry(oldEditDispReg).CurrentValues.SetValues(newValues);
             await dbContext.SaveChangesAsync();
@@ -38,7 +42,9 @@ namespace Business.Services
         {
             var dispRegId = await dbContext.DispRegs.FirstOrDefaultAsync(p => p.Id == idDispReg);
             if (dispRegId == null)
-                return;
+            { 
+                throw new Exception("ID DISPREG NOT FOUND"); 
+            }
             dbContext.Remove(dispRegId);
             await dbContext.SaveChangesAsync();
         }

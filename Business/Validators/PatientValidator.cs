@@ -2,9 +2,9 @@
 
 namespace Business.Validators;
 
-public static class PatientValidator
+public class PatientValidator : IPatientValidator
 {
-    public static void Validate(Patient patient)
+    public void Validate(Patient patient)
     {
         if (string.IsNullOrEmpty(patient.SurName))
             throw new Exception("SURNAME PATIENT IS NOT BE NULL OR EMPTY");

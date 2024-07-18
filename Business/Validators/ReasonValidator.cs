@@ -2,9 +2,9 @@
 
 namespace Business.Validators
 {
-    public static class ReasonValidator
+    public class ReasonValidator : IReasonValidator
     {
-        public static void Validate(Reason reason)
+        public async Task Validate(Reason reason)
         {
             if (string.IsNullOrEmpty(reason.ReasonName))
                 throw new Exception("REASON IS NOT BE NULL OR EMPTY");

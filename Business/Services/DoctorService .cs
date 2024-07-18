@@ -6,7 +6,7 @@ using Business.Validators;
 
 namespace Business.Services
 {
-    public class DoctorService(AppDbContext dbContext, IDoctorMapper doctorMapper) : IDoctorService
+    public class DoctorService(AppDbContext dbContext, IDoctorMapper doctorMapper, IDoctorValidator doctorValidator) : IDoctorService
     {
         public Doctor[] GetAll()
         {
@@ -15,7 +15,7 @@ namespace Business.Services
         }
         public async Task<int> AddDoctor(Doctor doctor)
         {
-            DoctorValidator.Validate(doctor);
+            await doctorValidator.Validate(doctor, dbContext);
             var entity = doctorMapper.MapFromModel(doctor);
             dbContext.Doctors.Add(entity);
             await dbContext.SaveChangesAsync();
@@ -24,7 +24,11 @@ namespace Business.Services
         public async Task EditDoctor(Doctor doctor)
         {
             var oldEditDoctor = await dbContext.Doctors.FirstOrDefaultAsync(p => p.Id == doctor.Id);
-            DoctorValidator.Validate(doctor);
+            if (oldEditDoctor == null) 
+            { 
+                throw new Exception("ID DOCTOR NOT FOUND"); 
+            }
+            await doctorValidator.Validate(doctor, dbContext);
             var newValues = doctorMapper.MapFromModel(doctor);
             dbContext.Entry(oldEditDoctor).CurrentValues.SetValues(newValues);
             await dbContext.SaveChangesAsync();
@@ -33,7 +37,9 @@ namespace Business.Services
         {
             var doctorId = await dbContext.Doctors.FirstOrDefaultAsync(p => p.Id == idDoctor);
             if (doctorId == null)
-                return;
+            {
+                throw new Exception("ID DOCTOR NOT FOUND");
+            }
             dbContext.Remove(doctorId);
             await dbContext.SaveChangesAsync();
         }

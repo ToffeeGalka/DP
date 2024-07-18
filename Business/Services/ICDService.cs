@@ -7,7 +7,7 @@ using Business.Validators;
 
 namespace Business.Services
 {
-    public class ICDService(AppDbContext dbContext, IICDMapper icdMapper) : IICDService
+    public class ICDService(AppDbContext dbContext, IICDMapper icdMapper, IICDValidator iCDValidator) : IICDService
     {
         public ICDEntity[] GetAll()
         {
@@ -16,7 +16,7 @@ namespace Business.Services
         }
         public async Task<int> AddICD(ICD10 icd10)
         {
-            ICDValidator.Validate(icd10);
+            iCDValidator.Validate(icd10);
             var entity = icdMapper.MapFromModel(icd10);
             dbContext.ICD10.Add(entity);
             await dbContext.SaveChangesAsync();
@@ -25,7 +25,11 @@ namespace Business.Services
         public async Task EditICD(ICD10 icd10)
         {
             var oldEditICD = await dbContext.ICD10.FirstOrDefaultAsync(p => p.Id == icd10.Id);
-            ICDValidator.Validate(icd10);
+            if (oldEditICD == null) 
+                {
+                    throw new Exception("ID ICD NOT FOUND");
+                }
+            iCDValidator.Validate(icd10);
             var newValues = icdMapper.MapFromModel(icd10);
             dbContext.Entry(oldEditICD).CurrentValues.SetValues(newValues);
             await dbContext.SaveChangesAsync();
@@ -34,7 +38,9 @@ namespace Business.Services
         {
             var icdId = await dbContext.ICD10.FirstOrDefaultAsync(p => p.Id == idICD);
             if (icdId == null)
-                return;
+            {
+                throw new Exception("ID ICD NOT FOUND");
+            }
             dbContext.Remove(icdId);
             await dbContext.SaveChangesAsync();
         }

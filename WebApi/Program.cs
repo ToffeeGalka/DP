@@ -4,6 +4,7 @@ using Microsoft.OpenApi.Models;
 using Business.Services;
 using WebData;
 using Business.Mappers;
+using Business.Validators;
 
 namespace Business
 {
@@ -31,21 +32,27 @@ namespace Business
             });
             builder.Services.AddTransient<IPatientService, PatientService>();
             builder.Services.AddScoped<IPatientMapper, PatientMapper>();
+            builder.Services.AddTransient<IPatientValidator, PatientValidator>();
 
             builder.Services.AddTransient<IPostService, PostService>();
             builder.Services.AddScoped<IPostMapper, PostMapper>();
+            builder.Services.AddTransient<IPostValidator, PostValidator>();
 
             builder.Services.AddTransient<IICDService, ICDService>();
             builder.Services.AddScoped<IICDMapper, ICDMapper>();
+            builder.Services.AddTransient<IICDValidator, ICDValidator>();
 
             builder.Services.AddTransient<IDoctorService, DoctorService>();
             builder.Services.AddScoped<IDoctorMapper, DoctorMapper>();
+            builder.Services.AddTransient<IDoctorValidator, DoctorValidator>();
 
             builder.Services.AddTransient<IReasonService, ReasonService>();
             builder.Services.AddScoped<IReasonMapper, ReasonMapper>();
+            builder.Services.AddTransient<IReasonValidator, ReasonValidator>();
 
             builder.Services.AddTransient<IDispRegService, DispRegService>();
             builder.Services.AddScoped<IDispRegMapper, DispRegMapper>();
+            builder.Services.AddTransient<IDispRegValidator, DispRegValidator>();
 
             var app = builder.Build();
             

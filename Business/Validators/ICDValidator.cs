@@ -2,9 +2,9 @@
 
 namespace Business.Validators
 {
-    public static class ICDValidator
+    public  class ICDValidator : IICDValidator
     {
-        public static void Validate(ICD10 icd10)
+        public void Validate(ICD10 icd10)
         {
             if (string.IsNullOrEmpty(icd10.ICDCode))
                 throw new Exception("ICD-CODE IS NOT BE NULL OR EMPTY");

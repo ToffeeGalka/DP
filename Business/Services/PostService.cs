@@ -7,7 +7,7 @@ using Business.Validators;
 
 namespace Business.Services
 {
-    public class PostService(AppDbContext dbContext, IPostMapper postMapper) : IPostService
+    public class PostService(AppDbContext dbContext, IPostMapper postMapper, IPostValidator postValidator) : IPostService
     {
         public PostEntity[] GetAll()
         {
@@ -16,7 +16,7 @@ namespace Business.Services
         }
         public async Task<int> AddPost(Post post)
         {
-            PostValidator.Validate(post);
+            postValidator.Validate(post);
             var entity = postMapper.MapFromModel(post);
             dbContext.Posts.Add(entity);
             await dbContext.SaveChangesAsync();
@@ -25,7 +25,11 @@ namespace Business.Services
         public async Task EditPost(Post post)
         {
             var oldEditPost = await dbContext.Posts.FirstOrDefaultAsync(p => p.Id == post.Id);
-            PostValidator.Validate(post);
+            if (oldEditPost == null)
+            {
+                throw new Exception("ID POST NOT FOUND");
+            }
+            postValidator.Validate(post);
             var newValues = postMapper.MapFromModel(post);
             dbContext.Entry(oldEditPost).CurrentValues.SetValues(newValues);
             await dbContext.SaveChangesAsync();
@@ -34,7 +38,9 @@ namespace Business.Services
         {
             var postId = await dbContext.Posts.FirstOrDefaultAsync(p => p.Id == idPost);
             if (postId == null)
-                return;
+            {
+                throw new Exception("ID POST NOT FOUND");
+            }
             dbContext.Remove(postId);
             await dbContext.SaveChangesAsync();
         }
