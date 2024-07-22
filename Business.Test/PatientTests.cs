@@ -1,14 +1,7 @@
 using Business.Models;
 using Business.Mappers;
 using Business.Services;
-using WebData.Entities;
 using Moq;
-using WebData.Enums;
-using System.Net;
-using System.Numerics;
-using Business.Validators;
-
-
 
 namespace Business.Test
 {
@@ -16,7 +9,7 @@ namespace Business.Test
     { 
         private Patient _patient;
         private Mock<IPatientMapper> _mapperMock;
-        private IPatientService _underTest;
+        private PatientService _underTest;
         private Mock<WebData.AppDbContext> _appDbContextMock;       
  
         [SetUp]

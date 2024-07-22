@@ -1,6 +1,4 @@
-﻿using WebData.Enums;
-
-namespace Business.Models
+﻿namespace Business.Models
 {
     public class Patient
     {
