@@ -9,6 +9,6 @@ namespace WebData.Entities
     public class ReasonEntity
     {
         public int Id { get; set; }
-        public string ReasonName { get; set; }
+        public string ReasonName { get; set; } = string.Empty;
     }
 }
