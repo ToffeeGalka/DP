@@ -2,6 +2,7 @@
 using Business.Mappers;
 using Business.Services;
 using Moq;
+using Business.Validators;
 
 namespace Business.Test
 {
@@ -11,13 +12,15 @@ namespace Business.Test
         private Mock<IPostMapper> _mapperMock;
         private PostService _underTest;
         private Mock<WebData.AppDbContext> _appDbContextMock;
+        private PostValidator _validatorMock;
 
         [SetUp]
         public void Setup()
         {
             _mapperMock = new Mock<IPostMapper>();
             _appDbContextMock = new Mock<WebData.AppDbContext>();
-            _underTest = new PostService(_appDbContextMock.Object, _mapperMock.Object);
+            _validatorMock = new PostValidator();
+            _underTest = new PostService(_appDbContextMock.Object, _mapperMock.Object, _validatorMock);
         }
         [Test]
         public void AddPost_ValidateNamePostIsNullOrEmpty()

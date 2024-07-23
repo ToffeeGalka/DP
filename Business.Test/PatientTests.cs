@@ -2,6 +2,7 @@ using Business.Models;
 using Business.Mappers;
 using Business.Services;
 using Moq;
+using Business.Validators;
 
 namespace Business.Test
 {
@@ -10,14 +11,16 @@ namespace Business.Test
         private Patient _patient;
         private Mock<IPatientMapper> _mapperMock;
         private PatientService _underTest;
-        private Mock<WebData.AppDbContext> _appDbContextMock;       
+        private Mock<WebData.AppDbContext> _appDbContextMock;   
+        private PatientValidator _validatorMock;
  
         [SetUp]
         public void Setup()
         {
             _mapperMock = new Mock<IPatientMapper>();
             _appDbContextMock = new Mock<WebData.AppDbContext>();
-            _underTest = new PatientService(_appDbContextMock.Object, _mapperMock.Object);         
+            _validatorMock = new PatientValidator();
+            _underTest = new PatientService(_appDbContextMock.Object, _mapperMock.Object, _validatorMock);         
         }
 
         [Test]
