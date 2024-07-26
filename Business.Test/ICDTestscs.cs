@@ -2,6 +2,7 @@
 using Business.Mappers;
 using Business.Services;
 using Moq;
+using Business.Validators;
 
 namespace Business.Test
 {
@@ -11,13 +12,15 @@ namespace Business.Test
         private Mock<IICDMapper> _mapperMock;
         private ICDService _underTest;
         private Mock<WebData.AppDbContext> _appDbContextMock;
+        private ICDValidator _icdValidatorMock;
 
         [SetUp]
         public void Setup()
         {
             _mapperMock = new Mock<IICDMapper>();
             _appDbContextMock = new Mock<WebData.AppDbContext>();
-            _underTest = new ICDService(_appDbContextMock.Object, _mapperMock.Object);
+            _icdValidatorMock = new ICDValidator();
+            _underTest = new ICDService(_appDbContextMock.Object, _mapperMock.Object, _icdValidatorMock);
         }
         [Test]
         public void AddICD_ValidateICDCodeIsNullOrEmpty()

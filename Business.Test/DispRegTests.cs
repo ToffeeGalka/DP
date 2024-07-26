@@ -3,22 +3,25 @@ using Business.Mappers;
 using Business.Services;
 using Moq;
 using System;
+using Business.Validators;
 
 namespace Business.Test
 {
     public class DispRegTests
     { 
-        private DispReg _dispReg;
+        private DispReg? _dispReg;
         private Mock<IDispRegMapper> _mapperMock;
         private DispRegService _underTest;
-        private Mock<WebData.AppDbContext> _appDbContextMock;       
+        private Mock<WebData.AppDbContext> _appDbContextMock;   
+        private DispRegValidator _validatorMock;
  
         [SetUp]
         public void Setup()
         {
             _mapperMock = new Mock<IDispRegMapper>();
             _appDbContextMock = new Mock<WebData.AppDbContext>();
-            _underTest = new DispRegService(_appDbContextMock.Object, _mapperMock.Object);         
+            _validatorMock = new DispRegValidator();
+            _underTest = new DispRegService(_appDbContextMock.Object, _mapperMock.Object, _validatorMock);  
         }
 
         [Test]

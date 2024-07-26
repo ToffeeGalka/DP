@@ -16,7 +16,7 @@ namespace WebData.Entities
         public DateOnly? DateNotTaken { get; set; }
         public int? IdReason { get; set; }
         public PatientEntity Patient { get; set; }
-        public ICDEntity ICD{ get; set; }
+        public ICDEntity ICD { get; set; }
         public DoctorEntity Doctor { get; set; }
         public ReasonEntity Reason { get; set; }
 

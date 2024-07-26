@@ -9,6 +9,6 @@ namespace Business.Validators
 {
     public interface IReasonValidator
     {
-        public Task Validate (Reason reason);
+        public void Validate (Reason reason);
     }
 }

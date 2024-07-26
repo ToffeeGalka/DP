@@ -54,6 +54,8 @@ namespace Business
             builder.Services.AddScoped<IDispRegMapper, DispRegMapper>();
             builder.Services.AddTransient<IDispRegValidator, DispRegValidator>();
 
+            builder.Services.AddTransient<IStatisticsService, StatisticsService>(); 
+
             var app = builder.Build();
             
             // Configure the HTTP request pipeline.

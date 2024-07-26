@@ -16,7 +16,7 @@ namespace Business.Services
         }
         public async Task<int> AddReason(Reason reason)
         {
-            await reasonValidator.Validate(reason);
+            reasonValidator.Validate(reason);
             var entity = reasonMapper.MapFromModel(reason);
             dbContext.Reasons.Add(entity);
             await dbContext.SaveChangesAsync();
@@ -29,7 +29,7 @@ namespace Business.Services
             {
                 throw new Exception("ID REASON NOT FOUND");
             }
-            await reasonValidator.Validate(reason);
+            reasonValidator.Validate(reason);
             var newValues = reasonMapper.MapFromModel(reason);
             dbContext.Entry(oldEditReason).CurrentValues.SetValues(newValues);
             await dbContext.SaveChangesAsync();
