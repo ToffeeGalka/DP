@@ -10,6 +10,7 @@ using WebData.Entities;
 
 namespace Business.Test
 {
+    [TestFixture] 
     public class DispRegTests
     { 
         private DispReg? _dispReg;
@@ -28,7 +29,7 @@ namespace Business.Test
         }
 
         [Test]
-        [Ignore ("")]
+        [Ignore("")]
         public void AddDispReg_ValidateDateTakenIsInvalid()
         {
             //Arrange

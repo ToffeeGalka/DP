@@ -6,6 +6,7 @@ using Business.Validators;
 
 namespace Business.Test
 {
+    [TestFixture]
     public class ICDTestscs
     {
         private ICD10 _icd;
@@ -13,7 +14,7 @@ namespace Business.Test
         private ICDService _underTest;
         private Mock<WebData.AppDbContext> _appDbContextMock;
         private ICDValidator _icdValidatorMock;
-
+      
         [SetUp]
         public void Setup()
         {

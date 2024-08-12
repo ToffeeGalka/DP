@@ -6,6 +6,7 @@ using Business.Validators;
 
 namespace Business.Test
 {
+    [TestFixture]
     public class PostTests
     {
         private Post _post;
